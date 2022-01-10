@@ -238,7 +238,10 @@ class EventFriendsScrapeService(IScrapeService):
         createEvent()
         openPopup()
         scrapeFriends()
-        closePopup()
-        deleteEvent()
+        try:
+            closePopup()
+            deleteEvent()
+        except:
+            print("Oh well, some weird error happend when trying to delete the event. Too bad, so sad.")
 
         time.sleep(3) # Just let it sleep for a little while so you can see what's on screen before it closes.
