@@ -21,7 +21,7 @@ class Scraper():
         option.add_argument('--disable-notifications')
         option.add_argument("--window-size=1920,1080")
         option.add_argument("--start-maximized")
-        option.add_argument("--headless")
+#        option.add_argument("--headless")
 
 
         # OPEN FACEBOOK

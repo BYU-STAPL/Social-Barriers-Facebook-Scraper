@@ -3,7 +3,7 @@
 
 
 import logging
-logging.basicConfig(level=logging.DEBUG)
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
@@ -31,8 +31,9 @@ class EventFriendsScrapeService(IScrapeService):
                 clickParentUntilNoError(element.find_element(By.XPATH, "./.."))
         
         def clickBySpanText(text):
-            WebDriverWait(browser, MAXIMUM_WAIT_TIME).until(EC.presence_of_element_located((By.XPATH, "//span[text()='" + text + "']")))
+            # WebDriverWait(browser, MAXIMUM_WAIT_TIME).until(EC.presence_of_element_located((By.XPATH, "//span[text()='" + text + "']")))
             clickParentUntilNoError(browser.find_element(By.XPATH, "//span[text()='" + text + "']"))
+        
         # For testing purposes only
         totalNumberOfFriends = 786
 
@@ -149,6 +150,7 @@ class EventFriendsScrapeService(IScrapeService):
 
             # Wait for popup to appear
             WebDriverWait(browser, MAXIMUM_WAIT_TIME).until(EC.presence_of_element_located((By.XPATH, "//span[text()='Select all']")))
+            print("We found the Select All thing!")
 
         def scrapeFriends():
             sideBar = browser.find_element(By.XPATH, "/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div[3]/div[1]/div[1]/div[2]/div[1]/div/div")
@@ -221,27 +223,39 @@ class EventFriendsScrapeService(IScrapeService):
 
         def closePopup():
             # Find the x button and click it
+            print("Attempting to close popup")
             logging.debug("Attempting to close popup")
-            clickParentUntilNoError(browser.find_element(By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div[2]/div/div/div[1]/div[3]/div/div/div/div[2]/div/div[3]/div/div")) # The x to close the popup
+            # clickParentUntilNoError(browser.find_element(By.CSS_SELECTOR, "[aria-label='Close']")) # The x to close the popup
+            # Press escape to get out of the browser!
+            webdriver.ActionChains(browser).send_keys(Keys.ESCAPE).perform()
+            logging.debug("Popup closed")
+            print("Popup closed")
+
 
             
         def deleteEvent():
             # Find the three dots option menu
             logging.debug("Attempting to delete event")
             clickParentUntilNoError(browser.find_element(By.CSS_SELECTOR, "[aria-label='More']")) # Three dots option menu
-            clickBySpanText("Cancel Event")
+            time.sleep(5) # Wait 5 seconds to see if the cancel event button will appear
+            clickParentUntilNoError(browser.find_element(By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[2]/div/div/div[1]/div[1]/div/div/div/div/div/div/div[1]/div/div[4]/div[2]/div/div/span")) # Cancel Event
+            # clickBySpanText("Cancel Event")
             clickBySpanText("Delete Event")
             #clickBySpanText("Confirm")
             # Sadly, it seems there are multiple spans with 'Confirm', so we click the Confirm button by xpath:
             clickParentUntilNoError(browser.find_element(By.XPATH, "/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div[4]/div/div[1]/div[1]/div/div[1]/div/span/span"))
+            logging.debug("Event deleted")
         
         createEvent()
         openPopup()
-        scrapeFriends()
-        try:
-            closePopup()
-            deleteEvent()
-        except:
-            print("Oh well, some weird error happend when trying to delete the event. Too bad, so sad.")
+        # scrapeFriends()
+        closePopup()
+        deleteEvent()
+
+        # try:
+        #     closePopup()
+        #     deleteEvent()
+        # except:
+        #     print("Oh well, some weird error happend when trying to delete the event. Too bad, so sad.")
 
         time.sleep(3) # Just let it sleep for a little while so you can see what's on screen before it closes.

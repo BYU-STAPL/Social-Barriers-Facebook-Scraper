@@ -4,7 +4,6 @@ from flask_cors import CORS
 import logging
 logging.basicConfig(level=logging.INFO)
 
-
 # configuration
 DEBUG = True
 
