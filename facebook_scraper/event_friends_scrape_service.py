@@ -238,7 +238,8 @@ class EventFriendsScrapeService(IScrapeService):
         def deleteEvent():
             # Find the three dots option menu
             logging.debug("Attempting to delete event")
-            clickParentUntilNoError(browser.find_element(By.CSS_SELECTOR, "[aria-label='More']")) # Three dots option menu
+            #clickParentUntilNoError(browser.find_element(By.CSS_SELECTOR, "[aria-label='More']")) # Three dots option menu
+            clickParentUntilNoError(browser.find_element(By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div[2]/div/div/div[1]/div[3]/div/div/div/div[2]/div/div[3]/div"))
             time.sleep(5) # Wait 5 seconds to see if the cancel event button will appear
             clickBySpanText("Cancel Event")
             clickBySpanText("Delete Event")

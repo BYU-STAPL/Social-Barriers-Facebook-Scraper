@@ -20,7 +20,7 @@ CORS(app, resources={r'/*': {'origins': '*'}}) #TODO: see the warning located he
 # - All the user's friends
 # - The events the user has attended
 from facebook_scraper import BuildSocialBarriersScraper
-TESTING = False
+TESTING = True
 if (TESTING):
     import json
     file = open('login.json')

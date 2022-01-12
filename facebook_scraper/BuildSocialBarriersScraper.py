@@ -23,7 +23,7 @@ def buildAndRunScraper(username, password):
     # attach the backend to the scraper
     scraper.attach_backend(CacheBackend())
 
-    scraper.attach_scraper(ProfScrapeService())
+    # scraper.attach_scraper(ProfScrapeService())
     scraper.attach_scraper(EventFriendsScrapeService())
 
 
