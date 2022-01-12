@@ -30,9 +30,12 @@ class EventFriendsScrapeService(IScrapeService):
             except:
                 clickParentUntilNoError(element.find_element(By.XPATH, "./.."))
         
+        def getSpanByText(text):
+            return browser.find_element(By.XPATH, "//span[text()='" + text + "']")
+
         def clickBySpanText(text):
             # WebDriverWait(browser, MAXIMUM_WAIT_TIME).until(EC.presence_of_element_located((By.XPATH, "//span[text()='" + text + "']")))
-            clickParentUntilNoError(browser.find_element(By.XPATH, "//span[text()='" + text + "']"))
+            clickParentUntilNoError(getSpanByText(text))
         
         # For testing purposes only
         totalNumberOfFriends = 786
@@ -222,14 +225,13 @@ class EventFriendsScrapeService(IScrapeService):
             user_dto.add_data("suggestedFriends", suggestedFriends)
 
         def closePopup():
-            # Find the x button and click it
-            print("Attempting to close popup")
-            logging.debug("Attempting to close popup")
-            # clickParentUntilNoError(browser.find_element(By.CSS_SELECTOR, "[aria-label='Close']")) # The x to close the popup
-            # Press escape to get out of the browser!
+            # Perform a shift tab to unfocus from the text that's selected
+            a = webdriver.ActionChains(browser)
+            a.key_down(Keys.SHIFT).send_keys(Keys.TAB).key_up(Keys.SHIFT) # shift tab
+            a.perform()
+
+            # Press the escape key
             webdriver.ActionChains(browser).send_keys(Keys.ESCAPE).perform()
-            logging.debug("Popup closed")
-            print("Popup closed")
 
 
             
@@ -238,8 +240,7 @@ class EventFriendsScrapeService(IScrapeService):
             logging.debug("Attempting to delete event")
             clickParentUntilNoError(browser.find_element(By.CSS_SELECTOR, "[aria-label='More']")) # Three dots option menu
             time.sleep(5) # Wait 5 seconds to see if the cancel event button will appear
-            clickParentUntilNoError(browser.find_element(By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[2]/div/div/div[1]/div[1]/div/div/div/div/div/div/div[1]/div/div[4]/div[2]/div/div/span")) # Cancel Event
-            # clickBySpanText("Cancel Event")
+            clickBySpanText("Cancel Event")
             clickBySpanText("Delete Event")
             #clickBySpanText("Confirm")
             # Sadly, it seems there are multiple spans with 'Confirm', so we click the Confirm button by xpath:
