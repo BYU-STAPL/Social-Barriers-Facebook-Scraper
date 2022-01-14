@@ -226,6 +226,7 @@ class EventFriendsScrapeService(IScrapeService):
 
         def closePopup():
             # Perform a shift tab to unfocus from the text that's selected
+            browser.find_element(By.XPATH, "//input[@placeholder='Search for people by name, email address or phone number']").click()
             a = webdriver.ActionChains(browser)
             a.key_down(Keys.SHIFT).send_keys(Keys.TAB).key_up(Keys.SHIFT) # shift tab
             a.perform()
@@ -250,14 +251,14 @@ class EventFriendsScrapeService(IScrapeService):
         
         createEvent()
         openPopup()
-        # scrapeFriends()
+        scrapeFriends()
         closePopup()
         deleteEvent()
 
-        # try:
-        #     closePopup()
-        #     deleteEvent()
-        # except:
-        #     print("Oh well, some weird error happend when trying to delete the event. Too bad, so sad.")
+        try:
+            closePopup()
+            deleteEvent()
+        except:
+            print("Oh well, some weird error happend when trying to delete the event. This means the user will have to delete a private event named 'a'. We caught the error so that ")
 
         time.sleep(3) # Just let it sleep for a little while so you can see what's on screen before it closes.
