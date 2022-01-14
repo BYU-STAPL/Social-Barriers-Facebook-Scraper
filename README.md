@@ -1,7 +1,47 @@
 # Social-Barriers-Facebook-Scraper
 
 
-## To get started on a new computer
+## To get started on a new computer (locally)
+
+### Native Windows Approach
+
+#### Install Chrome Driver for Windows
+Install Google Chrome.
+Determine what version of Chrome you have (https://www.digitalcitizen.life/version-google-chrome/)
+Then, navigate to https://chromedriver.chromium.org/downloads and download the corresponding chrome driver.
+Create a global PATH environment variable pointing to the chromedriver (if you don't know how to do that, see this video: https://www.youtube.com/watch?v=dz59GsdvUF8)
+
+#### Clone the Repository
+Open the File explorer and navigate to the folder you'd like to store the scraper in, e.g.,
+`cd Users\STaPL\Desktop\FB-prototype\`
+Right click inside the folder and click:
+`Git Bash Here` (assumes Git Bash is installed)
+Then clone the repository.
+`git clone https://github.com/BYU-STAPL/Social-Barriers-Facebook-Scraper.git`
+You can now close out of Git Bash.
+
+#### Enable and Run Flask
+Next, open cmd and navigate to the folder just created, e.g.
+`cd Users\STaPL\Desktop\FB-prototype\Social-Barriers-Facebook-Scraper`
+Create a virutal Python environment:
+`py -3 -m venv environment`
+Activate the environment:
+`environment\Scripts\activate`
+Install the Python module dependencies:
+`pip install -r requirements.txt`
+Set the FLASK_APP virtual environment variable:
+`setx FLASK_APP "server.py"`
+Start the flask server:
+`flask run`
+
+You should now see that the flask server is running. This will handle calls to scrape data.
+#### Install Selenium for Windows:
+
+
+
+
+## Experiments with a server computer:
+
 Alright, to get this running on Digital Ocean, this is what I did:
 I followed the instructions found here: https://keeganleary.com/setting-up-chrome-and-selenium-with-python-on-a-virtual-private-server-digital-ocean/
 (note that after step 11, you need to unzip the .zip file that you download). If the link doesn't work for some reason, I've copied and pasted the instrucitons below.
