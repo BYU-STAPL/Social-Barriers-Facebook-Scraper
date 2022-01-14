@@ -5,7 +5,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 # configuration
-DEBUG = True
+DEBUG = False
 
 # instantiate the app
 app = Flask(__name__)
@@ -20,7 +20,7 @@ CORS(app, resources={r'/*': {'origins': '*'}}) #TODO: see the warning located he
 # - All the user's friends
 # - The events the user has attended
 from facebook_scraper import BuildSocialBarriersScraper
-TESTING = True
+TESTING = False
 if (TESTING):
     import json
     file = open('login.json')
