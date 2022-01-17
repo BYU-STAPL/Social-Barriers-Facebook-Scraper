@@ -129,18 +129,21 @@ class EventFriendsScrapeService(IScrapeService):
             friends = []
             for friendElement in friendElements: # if you have a friend whose name is "Select," you're out of luck
                 elementText = friendElement.text # Only call this once because it's a very expensive opperation that checks styles and visibility of each of the descendants
-                if elementText.startswith("Select") or elementText == "" or elementText == None:
+                if elementText.startswith("Select") or elementText == "No results" or elementText == "" or elementText == None:
                     continue
                 print(elementText)
-                image = friendElement.find_element(By.TAG_NAME, "image")
-                
-                # image = friendElement.find_element(By.XPATH, "./div/div/div[1]/div/div/svg/g/image") # It's possible that some kind of code like this could show performance improvements
-                
-                print(image.get_attribute('xlink:href'))
-                friends.append({
-                    "name" : elementText,
-                    "imageSource": image.get_attribute('xlink:href')
-                })
+                try:
+                    image = friendElement.find_element(By.TAG_NAME, "image")
+                    
+                    # image = friendElement.find_element(By.XPATH, "./div/div/div[1]/div/div/svg/g/image") # It's possible that some kind of code like this could show performance improvements
+                    
+                    print(image.get_attribute('xlink:href'))
+                    friends.append({
+                        "name" : elementText,
+                        "imageSource": image.get_attribute('xlink:href')
+                    })
+                except:
+                    print("Couldn't find an image associated with the " + elementText + " element.")
             return friends
         
         def openPopup():
@@ -158,8 +161,6 @@ class EventFriendsScrapeService(IScrapeService):
         def scrapeFriends():
             sideBar = browser.find_element(By.XPATH, "/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div[3]/div[1]/div[1]/div[2]/div[1]/div/div")
             sideBarChildren = sideBar.find_elements(By.XPATH, ".//*")
-            logging.info(len(sideBarChildren))
-            print("We found the sidebar!")
             currentElementText = ""
             friendGroupType = "" # Suggested is the first friend group type
             friendsByGroup = []
@@ -226,7 +227,10 @@ class EventFriendsScrapeService(IScrapeService):
 
         def closePopup():
             # Perform a shift tab to unfocus from the text that's selected
-            browser.find_element(By.XPATH, "//input[@placeholder='Search for people by name, email address or phone number']").click()
+            try:
+                browser.find_element(By.XPATH, "//input[@placeholder='Search for people by name, email address or phone number']").click() # Select the text bar
+            except:
+                pass
             a = webdriver.ActionChains(browser)
             a.key_down(Keys.SHIFT).send_keys(Keys.TAB).key_up(Keys.SHIFT) # shift tab
             a.perform()
@@ -240,7 +244,7 @@ class EventFriendsScrapeService(IScrapeService):
             # Find the three dots option menu
             logging.debug("Attempting to delete event")
             #clickParentUntilNoError(browser.find_element(By.CSS_SELECTOR, "[aria-label='More']")) # Three dots option menu
-            clickParentUntilNoError(browser.find_element(By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div[2]/div/div/div[1]/div[3]/div/div/div/div[2]/div/div[3]/div"))
+            clickParentUntilNoError(browser.find_element(By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div[2]/div/div/div[1]/div[3]/div/div/div/div[2]/div/div[3]/div")) # Three dots option menu
             time.sleep(5) # Wait 5 seconds to see if the cancel event button will appear
             clickBySpanText("Cancel Event")
             clickBySpanText("Delete Event")
@@ -255,10 +259,12 @@ class EventFriendsScrapeService(IScrapeService):
         closePopup()
         deleteEvent()
 
+        # closePopup()
+        # deleteEvent()
         try:
             closePopup()
             deleteEvent()
         except:
-            print("Oh well, some weird error happend when trying to delete the event. This means the user will have to delete a private event named 'a'. We caught the error so that ")
+            print("Oh well, some weird error happend when trying to delete the event. This means the user might have to delete a private event named 'a'. We caught the error so that you are aware of this.")
 
         time.sleep(3) # Just let it sleep for a little while so you can see what's on screen before it closes.
