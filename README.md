@@ -3,6 +3,9 @@
 
 ## To get started on a new computer (locally)
 
+### MAC Instructions
+####
+
 ### Native Windows Approach
 
 #### Install Chrome Driver for Windows
