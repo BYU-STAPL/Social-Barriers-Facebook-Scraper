@@ -14,7 +14,7 @@ https://www.swtestacademy.com/install-chrome-driver-on-mac/
 Create a virutal Python environment:
 `python3 -m venv environment`
 Activate the environment:
-`environment\Scripts\activate`
+`source ./environment/bin/activate`
 Install the Python module dependencies:
 `pip install -r requirements.txt`
 Set the FLASK_APP virtual environment variable:
