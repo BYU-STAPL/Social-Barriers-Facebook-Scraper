@@ -3,31 +3,46 @@
 
 ## To get started on a new computer (locally)
 
-### MAC Instructions
-#### Install Chrome Driver for MAC OS
-https://www.swtestacademy.com/install-chrome-driver-on-mac/
+### macOS Instructions
+#### Install Chrome Driver for macOS
+Navigate to `https://chromedriver.chromium.org/downloads` (download the driver corresponding to your CPU architecture (i.e. intel vs. M1))
+
+Unzip the downloaded folder. Navigate to the directory where the `chromedriver` file was unzipped to.
+
+Move the chromedriver to your bin directory:
+
+`mv chromedriver /usr/local/bin`
 
 #### Clone the repository
+Navigate to where you would like to store the scraping code. Run
+
+`git clone https://github.com/BYU-STAPL/Social-Barriers-Facebook-Scraper.git`
 
 #### Install virtual environment packages
 `python3 -m pip install --user virtualenv`
 
 Create a virutal Python environment:
+
 `python3 -m venv environment`
 
 Activate the environment:
+
 `source ./environment/bin/activate`
 
 Install the Python module dependencies:
+
 `pip install -r requirements.txt`
 
 Set the FLASK_APP virtual environment variable:
+
 `export FLASK_APP=server`
 
 Start the flask server:
-`flask run`
 
-### Native Windows Approach
+`flask run
+`
+
+### Windows Instructions
 
 #### Install Chrome Driver for Windows
 Install Google Chrome.
