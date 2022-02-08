@@ -4,7 +4,8 @@
 ## To get started on a new computer (locally)
 
 ### MAC Instructions
-####
+#### Install Chrome Driver for MAC OS
+https://www.swtestacademy.com/install-chrome-driver-on-mac/
 
 ### Native Windows Approach
 
@@ -27,7 +28,7 @@ You can now close out of Git Bash.
 Next, open cmd and navigate to the folder just created, e.g.
 `cd Users\STaPL\Desktop\FB-prototype\Social-Barriers-Facebook-Scraper`
 Create a virutal Python environment:
-`py -3 -m venv environment`
+`python3 -m venv environment`
 Activate the environment:
 `environment\Scripts\activate`
 Install the Python module dependencies:
