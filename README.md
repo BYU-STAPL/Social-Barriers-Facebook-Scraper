@@ -7,6 +7,21 @@
 #### Install Chrome Driver for MAC OS
 https://www.swtestacademy.com/install-chrome-driver-on-mac/
 
+#### Clone the repository
+
+#### Install virtual environment packages
+`python3 -m pip install --user virtualenv`
+Create a virutal Python environment:
+`python3 -m venv environment`
+Activate the environment:
+`environment\Scripts\activate`
+Install the Python module dependencies:
+`pip install -r requirements.txt`
+Set the FLASK_APP virtual environment variable:
+`setx FLASK_APP "server.py"`
+Start the flask server:
+`flask run`
+
 ### Native Windows Approach
 
 #### Install Chrome Driver for Windows
