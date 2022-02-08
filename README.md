@@ -76,7 +76,16 @@ Start the flask server:
 You should now see that the flask server is running. This will handle calls to scrape data.
 #### Install Selenium for Windows:
 
+## Notes about project structure
 
+### Flask server
+The file `server.py` catches HTTP requests and listens on port localhost:5000. It expends a logIn POST request containing a Facebook username and password. It then calls `buildAndRunScraper(username, password)` from the `BuildSocialBarriersScraper.py` file. This creates an instance of Scraper (defined in `scraper.py`). The implementation is simple. The backend defines how the data scraped will be stored. In our case, we are simply caching this data in computer memory before sending it back to the Vue app.
+
+Scraper services are also attached to the scraper. A scraper service is a class that implements an abstract class requiring a `scrape(self, user_dto, browser)` method.
+
+`user_dto` is a class that wraps a Python dictionary where all data scraped can be stored. `browser` is basically a reference to the chrome driver.
+
+Data can be scraped by calling methods on the `browser` and then storing desired data in `user_dto`. After the scraper's `scrape()` function has finished calling all of the scrape service's `scrape(self, user_dto, browser)` methods, `buildAndRunScraper` returns the `user_data` from the `user_dto` object.
 
 
 ## Experiments with a server computer:
