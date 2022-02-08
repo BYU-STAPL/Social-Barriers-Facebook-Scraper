@@ -22,7 +22,7 @@ Install the Python module dependencies:
 `pip install -r requirements.txt`
 
 Set the FLASK_APP virtual environment variable:
-`setx FLASK_APP "server.py"`
+`export FLASK_APP=server`
 
 Start the flask server:
 `flask run`
